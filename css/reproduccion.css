@@ -20,10 +20,10 @@ body {
     align-items: center;
   }
   
-  .sidebar ul {
+  .sidebar ul { /* lista desordenada (ul) que está dentro del elemento con la clase sideba*/
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 10px 0 0 0;
   }
   
   .sidebar li {
@@ -39,6 +39,7 @@ body {
   /* Estilos para los iconos */
   .sidebar i {
     margin-right: 10%;
+    margin-bottom: 30px;
 
   }
   
