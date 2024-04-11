@@ -25,6 +25,7 @@ async function connectToMongoDB() {
     console.error("Error connecting to MongoDB:", error);
     process.exit(1); // Exiting the process if unable to connect to MongoDB
   }
+  return client
 }
 
 async function closeMongoDBConnection() {
@@ -67,8 +68,8 @@ async function handleSignup(req, res) {
   }
 
   try {
-    // Aquí deberías manejar la lógica para registrar al usuario en la base de datos
-    // Puedes acceder a los datos enviados desde el formulario mediante req.body
+    const userData = req.body; // Suponiendo que los datos del usuario están en req.body
+    await registerUser(userData);
 
     // Ejemplo básico de cómo manejar la solicitud de registro
     res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -98,6 +99,20 @@ async function handleLogin(req, res) {
     console.error("Error handling login:", error);
     res.writeHead(500, { 'Content-Type': 'text/plain' });
     res.end('Internal Server Error');
+  }
+}
+
+async function registerUser(userData) {
+  try {
+    const database = client.db('SCN'); // Cambia esto al nombre de tu base de datos
+    const usersCollection = database.collection('users');
+
+    // Insertar el nuevo usuario en la colección de usuarios
+    await usersCollection.insertOne(userData);
+    console.log("Se va a añadir un nuevo usuario");
+  }
+  catch (error) {
+    console.error("Error haciendo singup:", error);
   }
 }
 
