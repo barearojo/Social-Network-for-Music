@@ -3,10 +3,34 @@ const http = require('http'); // Módulo para crear el servidor HTTP
 const fs = require('fs'); // Módulo para interactuar con el sistema de archivos
 const path = require('path'); // Módulo para manejar rutas de archivos
 const moment = require('moment'); // Importar la biblioteca moment.js para manipulación de fechas y horas
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 // Definición del hostname y puerto del servidor
 const hostname = '127.0.0.1';
 const port = 3000;
+
+const uri = "mongodb+srv://juanbareagarchomp:LHlLK6Vr1fVhKfh8@cluster0.lqh6du8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 // Crear el servidor HTTP
 const server = http.createServer((req, res) => {
