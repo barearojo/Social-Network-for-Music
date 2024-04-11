@@ -82,6 +82,21 @@ async function handleSignup(req, res) {
   }
 }
 
+async function authenticateUser(username, password) {
+
+  try {
+    const database = client.db('SCN'); // Cambia esto al nombre de tu base de datos
+    const usersCollection = database.collection('users');
+
+    // Buscar al usuario en la colección de usuarios
+    const user = await usersCollection.findOne({ username, password });
+    return user;
+  } 
+  catch (error) {
+    console.error("Error haciendo singup:", error);
+  }
+}
+
 async function handleLogin(req, res) {
   if (req.method !== 'POST') {
     res.writeHead(405, { 'Content-Type': 'text/plain' });
@@ -93,9 +108,16 @@ async function handleLogin(req, res) {
     // Aquí deberías manejar la lógica para autenticar al usuario en la base de datos
     // Puedes acceder a los datos enviados desde el formulario mediante req.body
 
-    // Ejemplo básico de cómo manejar la solicitud de inicio de sesión
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('User logged in successfully');
+    const { username, password } = req.body; // Suponiendo que los datos del formulario son username y password
+    const user = await authenticateUser(username, password);
+
+    if (user) {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('User logged in successfully');
+    } else {
+      res.writeHead(401, { 'Content-Type': 'text/plain' });
+      res.end('Invalid username or password');
+    }
   } catch (error) {
     console.error("Error handling login:", error);
     res.writeHead(500, { 'Content-Type': 'text/plain' });
