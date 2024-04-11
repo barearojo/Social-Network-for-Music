@@ -98,32 +98,40 @@ async function authenticateUser(username, password) {
 }
 
 async function handleLogin(req, res) {
+  // Verifica si el método de solicitud no es POST
   if (req.method !== 'POST') {
+    // Si no es POST, envía una respuesta 405 (Método no permitido)
     res.writeHead(405, { 'Content-Type': 'text/plain' });
-    res.end('Method Not Allowed');
-    return;
+    res.end('Method Not Allowed'); // Finaliza la respuesta con un mensaje
+    return; // Sale de la función tempranamente
   }
 
   try {
     // Aquí deberías manejar la lógica para autenticar al usuario en la base de datos
     // Puedes acceder a los datos enviados desde el formulario mediante req.body
 
-    const { username, password } = req.body; // Suponiendo que los datos del formulario son username y password
+    // Desestructura los datos del cuerpo de la solicitud (suponiendo que son username y password)
+    const { username, password } = req.body;
+    // Autentica al usuario utilizando los datos proporcionados
     const user = await authenticateUser(username, password);
 
     if (user) {
+      // Si el usuario está autenticado con éxito, envía una respuesta 200 (OK)
       res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('User logged in successfully');
+      res.end('User logged in successfully'); // Finaliza la respuesta con un mensaje
     } else {
+      // Si el usuario no está autenticado, envía una respuesta 401 (No autorizado)
       res.writeHead(401, { 'Content-Type': 'text/plain' });
-      res.end('Invalid username or password');
+      res.end('Invalid username or password'); // Finaliza la respuesta con un mensaje
     }
   } catch (error) {
+    // Si se produce un error durante el proceso, registra el error y envía una respuesta 500 (Error del servidor)
     console.error("Error handling login:", error);
     res.writeHead(500, { 'Content-Type': 'text/plain' });
-    res.end('Internal Server Error');
+    res.end('Internal Server Error'); // Finaliza la respuesta con un mensaje
   }
 }
+
 
 async function registerUser(userData) {
   try {
@@ -132,7 +140,7 @@ async function registerUser(userData) {
 
     // Insertar el nuevo usuario en la colección de usuarios
     await usersCollection.insertOne(userData);
-    console.log("Se va a añadir un nuevo usuario");
+    console.log("Se va a añadir un nuevo usuario ", userData);
   }
   catch (error) {
     console.error("Error haciendo singup:", error);
