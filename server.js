@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const bodyParser = require('body-parser');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -25,7 +26,6 @@ async function connectToMongoDB() {
     console.error("Error connecting to MongoDB:", error);
     process.exit(1); // Exiting the process if unable to connect to MongoDB
   }
-  return client
 }
 
 async function closeMongoDBConnection() {
@@ -36,6 +36,7 @@ async function closeMongoDBConnection() {
     console.error("Error closing MongoDB connection:", error);
   }
 }
+
 async function serveFile(req, res) {
   let filePath = '.' + req.url;
   if (filePath === './') {
@@ -120,13 +121,30 @@ async function startServer() {
   await connectToMongoDB();
 
   const server = http.createServer(async (req, res) => {
-    const url = req.url;
-    if (url === '/signup') {
-      await handleSignup(req, res);
-    } else if (url === '/login') {
-      await handleLogin(req, res);
+    // Parsear el cuerpo de la solicitud como JSON si la solicitud es POST
+    if (req.method === 'POST') {
+      let data = '';
+      req.on('data', chunk => {
+        data += chunk.toString();
+      });
+      req.on('end', async () => {
+        req.body = JSON.parse(data);
+        if (req.url === '/signup') {
+          await handleSignup(req, res);
+        } else if (req.url === '/login') {
+          await handleLogin(req, res);
+        } else {
+          await serveFile(req, res);
+        }
+      });
     } else {
-      await serveFile(req, res);
+      if (req.url === '/signup') {
+        await handleSignup(req, res);
+      } else if (req.url === '/login') {
+        await handleLogin(req, res);
+      } else {
+        await serveFile(req, res);
+      }
     }
   });
 
