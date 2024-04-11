@@ -35,7 +35,6 @@ async function closeMongoDBConnection() {
     console.error("Error closing MongoDB connection:", error);
   }
 }
-
 async function serveFile(req, res) {
   let filePath = '.' + req.url;
   if (filePath === './') {
@@ -60,11 +59,60 @@ async function serveFile(req, res) {
   }
 }
 
+async function handleSignup(req, res) {
+  if (req.method !== 'POST') {
+    res.writeHead(405, { 'Content-Type': 'text/plain' });
+    res.end('Method Not Allowed');
+    return;
+  }
+
+  try {
+    // Aquí deberías manejar la lógica para registrar al usuario en la base de datos
+    // Puedes acceder a los datos enviados desde el formulario mediante req.body
+
+    // Ejemplo básico de cómo manejar la solicitud de registro
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('User registered successfully');
+  } catch (error) {
+    console.error("Error handling signup:", error);
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Internal Server Error');
+  }
+}
+
+async function handleLogin(req, res) {
+  if (req.method !== 'POST') {
+    res.writeHead(405, { 'Content-Type': 'text/plain' });
+    res.end('Method Not Allowed');
+    return;
+  }
+
+  try {
+    // Aquí deberías manejar la lógica para autenticar al usuario en la base de datos
+    // Puedes acceder a los datos enviados desde el formulario mediante req.body
+
+    // Ejemplo básico de cómo manejar la solicitud de inicio de sesión
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('User logged in successfully');
+  } catch (error) {
+    console.error("Error handling login:", error);
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Internal Server Error');
+  }
+}
+
 async function startServer() {
   await connectToMongoDB();
-  
+
   const server = http.createServer(async (req, res) => {
-    await serveFile(req, res);
+    const url = req.url;
+    if (url === '/signup') {
+      await handleSignup(req, res);
+    } else if (url === '/login') {
+      await handleLogin(req, res);
+    } else {
+      await serveFile(req, res);
+    }
   });
 
   server.listen(port, hostname, () => {
