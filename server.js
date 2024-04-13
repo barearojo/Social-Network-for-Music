@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const hostname = '127.0.0.1';
 const port = 3000;
 
+
 const uri = "mongodb+srv://juanbareagarchomp:LHlLK6Vr1fVhKfh8@cluster0.lqh6du8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri, {
   serverApi: {
