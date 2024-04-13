@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const formData = new FormData(signUpForm);
       const username = formData.get('username');
       const password = formData.get('password');
-      //const email = formData.get('email');
-      //const description = formData.get('description');
+      const email = formData.get('email');
+      const description = formData.get('description');
 
     
       // Envía los datos al servidor para registrar al usuario
