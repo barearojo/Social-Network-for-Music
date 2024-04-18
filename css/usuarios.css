@@ -78,7 +78,7 @@ input[type="text"], input[type="email"] {
 
 /* Botón para edición y guardar */
 button {
-  background-color: #5cb85c; /* Verde */
+  background-color: #169616; /* Verde */
   color: white;
   padding: 10px 15px;
   border: none;
@@ -88,5 +88,5 @@ button {
 }
 
 button:hover {
-  background-color: #4cae4c; /* Verde oscuro */
+  background-color: #2e6d2e; /* Verde oscuro */
 }

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.ok) {
           // Inicio de sesión exitoso, redirige al usuario a la página de inicio
           window.location.href = '../pages/home.html';
+          console.log(user)
         } else {
           // Manejar errores
           console.error('Error al iniciar sesión:', response.statusText);
