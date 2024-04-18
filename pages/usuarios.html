@@ -4,37 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Network for Music (SNM)</title>
-    <!-- Aquí puedes incluir enlaces a tus archivos CSS -->
     <link rel="stylesheet" href="../css/usuarios.css">
     <script src="https://kit.fontawesome.com/36efa85050.js" crossorigin="anonymous"></script>
-
 </head>
 <body>
     <header>
-        <h1>Your Profile</h1>
+        <h1>Tu Perfil</h1>
     </header>
 
     <div class="sidebar">
         <a href="home.html" > <i class="fa-solid fa-house fa-3x"></i></a>
-        <a href="usuarios.html" > <i class="fa-solid fa-user fa-3x"></i> </a>     
+        <a href="usuarios.html" class="active"> <i class="fa-solid fa-user fa-3x"></i> </a>     
         <a href="reproduccion.html" > <i class="fa-solid fa-music fa-3x"></i></a>  
         <a href="emisoras.html" ><i class="fa-solid fa-radio fa-3x"></i></a> 
-        <!-- Añade más enlaces con iconos según lo necesites -->
-      </div>
+    </div>
 
     <main>
-        <section id="musicas">
-            <h2>Musica</h2>
-            <a></a>
-            <!-- Aquí puedes incluir el formulario de registro/inicio de sesión -->
+        <section id="info_usuario">
+            <h2>Información del Usuario</h2>
+            <div class="datos_usuario">
+                <p><strong>Nombre:</strong> <span id="nombre_usuario">John Doe</span></p>
+                <p><strong>Email:</strong> <span id="email_usuario">johndoe@example.com</span></p>
+                <p><strong>País:</strong> <span id="pais_usuario">España</span></p>
+                <p><strong>Géneros Favoritos:</strong> <span id="generos_usuario">Rock, Jazz</span></p>
+            </div>
+
+            <button onclick="editarUsuario()">Editar Perfil</button>
         </section>
 
+        <section id="editar_usuario" style="display:none;">
+            <h2>Editar Perfil</h2>
+            <form action="/updateProfile" method="post">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="pais">País:</label>
+                <input type="text" id="pais" name="pais" required>
+
+                <label for="generos">Géneros Favoritos:</label>
+                <input type="text" id="generos" name="generos" required>
+
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </section>
     </main>
 
     <footer>
-        <!-- Aquí puedes incluir información adicional, como enlaces a tus redes sociales o créditos -->
         <p>&copy; 2024 Social Network for Music (SNM)</p>
     </footer>
 
+    <script>
+        function editarUsuario() {
+            document.getElementById('info_usuario').style.display = 'none';
+            document.getElementById('editar_usuario').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
