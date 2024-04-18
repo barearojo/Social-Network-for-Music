@@ -1,3 +1,43 @@
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+header, footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+  height: 100%;
+  width: 7%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar i {
+  margin-right: 10%;
+  margin-bottom: 30px;
+}
+
 /* Estilos para el contenido principal */
 main {
   margin-left: 7%; /* Ancho de la barra lateral ajustado */
