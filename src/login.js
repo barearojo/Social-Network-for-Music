@@ -20,6 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
   
         if (response.ok) {
           // Inicio de sesión exitoso, redirige al usuario a la página de inicio
+          sessionStorage.setItem('username', username);
+          print("q")
           window.location.href = '../pages/home.html';
           console.log(user)
         } else {
